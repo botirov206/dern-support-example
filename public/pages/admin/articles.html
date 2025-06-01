@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Knowledge Base - Admin</title>
+    <link href="/css/output.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <!-- Include a WYSIWYG editor like Quill or TinyMCE if rich text editing is desired -->
+    <!-- For example, Quill: -->
+    <!-- <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet"> -->
+</head>
+<body class="bg-gray-100 font-inter">
+    <nav class="bg-gray-900 text-white fixed w-full top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/admin" class="flex items-center space-x-2">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                        <span class="font-bold text-xl">Admin Panel</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="/admin" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800"> <i class="fas fa-chart-line mr-2"></i> Dashboard </a>
+                        <a href="/admin/requests" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800"> <i class="fas fa-ticket-alt mr-2"></i> Support Requests </a>
+                        <a href="/admin/users" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800"> <i class="fas fa-users mr-2"></i> Users </a>
+                        <a href="/admin/articles" class="flex items-center px-3 py-2 rounded-md text-sm font-medium bg-gray-800"> <i class="fas fa-book mr-2"></i> Knowledge Base </a>
+                        <div class="relative" id="adminMenu">
+                            <button id="adminMenuBtn" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800">
+                                <i class="fas fa-user-shield mr-2"></i> <span id="adminName">Admin</span> <i class="fas fa-chevron-down ml-2"></i>
+                            </button>
+                            <div id="adminMenuDropdown" class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                                <div class="py-1">
+                                    <a href="/admin/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"> <i class="fas fa-cog mr-2"></i> Settings </a>
+                                    <button id="logoutBtn" class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"> <i class="fas fa-sign-out-alt mr-2"></i> Logout </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-24 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-semibold text-gray-900">Knowledge Base Management</h1>
+                <button id="openCreateArticleModalButton" style="border: 1px solid black;" class="bg-green-600 hover:bg-green-700 text-black font-medium py-2 px-4 rounded-md flex items-center">
+                    <i class="fas fa-plus mr-2"></i> Create New Article
+                </button>
+            </div>
+
+            <!-- Articles Display Area -->
+            <div id="articlesDisplayArea" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Articles will be loaded here by JavaScript -->
+            </div>
+            
+             <!-- Pagination could be added here if many articles are expected (though not implemented in this step) -->
+        </div>
+    </main>
+
+    <!-- Article Modal (Create/Edit) -->
+    <div id="articleModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 overflow-y-auto h-full w-full z-[100]">
+        <div class="relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-6 border w-11/12 max-w-3xl shadow-lg rounded-md bg-white">
+            <div class="flex justify-between items-center pb-3 mb-4 border-b">
+                <h2 class="text-xl font-semibold text-gray-900" id="articleModalTitle">Create New Article</h2>
+                <button onclick="closeArticleModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                    <i class="fas fa-times text-xl"></i><span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <form id="articleForm" class="space-y-4">
+                <input type="hidden" id="articleId">
+                <div>
+                    <label for="articleTitleInput" class="block text-sm font-medium text-gray-700">Title</label>
+                    <input type="text" id="articleTitleInput" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-2 px-3">
+                </div>
+                <div>
+                    <label for="articleCategoryInput" class="block text-sm font-medium text-gray-700">Category</label>
+                    <select id="articleCategoryInput" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-2 px-3">
+                        <option value="" disabled selected>Select a category</option>
+                        <option value="hardware">Hardware</option>
+                        <option value="software">Software</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="articleTagsInput" class="block text-sm font-medium text-gray-700">Tags (comma-separated)</label>
+                    <input type="text" id="articleTagsInput" placeholder="e.g., printer, setup, error" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-2 px-3">
+                </div>
+                <div>
+                    <label for="articleImageUrlInput" class="block text-sm font-medium text-gray-700">Image URL (Optional)</label>
+                    <input type="url" id="articleImageUrlInput" placeholder="https://example.com/image.jpg" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-2 px-3">
+                </div>
+                <div>
+                    <label for="articleContentInput" class="block text-sm font-medium text-gray-700">Content (Markdown supported)</label>
+                    <textarea id="articleContentInput" rows="10" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-2 px-3" placeholder="Write your article content here..."></textarea>
+                    <p class="text-xs text-gray-500 mt-1">You can use Markdown for formatting.</p>
+                </div>
+                 <div>
+                    <label for="articleSummaryInput" class="block text-sm font-medium text-gray-700">Summary (Optional, for card view)</label>
+                    <textarea id="articleSummaryInput" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-2 px-3" placeholder="A brief summary for display on cards..."></textarea>
+                </div>
+            </form>
+            <div class="mt-6 pt-4 border-t flex justify-end space-x-2">
+                <button onclick="closeArticleModal()" type="button" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-md">Cancel</button>
+                <button id="saveArticleBtn" type="submit" form="articleForm" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">Save Article</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+    <script src="/assets/js/admin.js"></script>
+    <!-- If using Quill or another editor, include its script here -->
+    <!-- <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!initProtectedPage(true)) return;
+            initAdminMenu(); // Sets up admin menu and logout
+
+            const createArticleBtn = document.getElementById('openCreateArticleModalButton');
+            const articleModal = document.getElementById('articleModal');
+            const articleForm = document.getElementById('articleForm');
+            
+            if (createArticleBtn) {
+                createArticleBtn.addEventListener('click', () => {
+                    articleForm.reset();
+                    document.getElementById('articleId').value = ''; // Clear ID for create mode
+                    document.getElementById('articleModalTitle').textContent = 'Create New Article';
+                    articleModal.classList.remove('hidden');
+                });
+            }
+
+            articleForm.addEventListener('submit', saveArticle);
+            loadArticles();
+        });
+
+        function initAdminMenu() {
+            const adminMenuBtn = document.getElementById('adminMenuBtn');
+            const adminMenuDropdown = document.getElementById('adminMenuDropdown');
+            const adminNameSpan = document.getElementById('adminName');
+            const currentUser = getCurrentUser();
+            if(currentUser && currentUser.name) adminNameSpan.textContent = currentUser.name;
+
+            if (adminMenuBtn && adminMenuDropdown) {
+                adminMenuBtn.addEventListener('click', (e) => { e.stopPropagation(); adminMenuDropdown.classList.toggle('hidden'); });
+                document.addEventListener('click', (e) => {
+                    if (adminMenuBtn && !adminMenuBtn.contains(e.target) && adminMenuDropdown && !adminMenuDropdown.contains(e.target)) {
+                        adminMenuDropdown.classList.add('hidden');
+                    }
+                });
+            }
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) logoutBtn.addEventListener('click', logout);
+        }
+
+        async function loadArticles() {
+            const articlesDisplay = document.getElementById('articlesDisplayArea');
+            articlesDisplay.innerHTML = '<p class="text-center text-gray-500 col-span-full">Loading articles...</p>'; // Spans all columns if grid
+            try {
+                const articles = await getArticles(); // From admin.js, fetches from /api/admin/articles
+                
+                if (!articles || articles.length === 0) {
+                    articlesDisplay.innerHTML = '<p class="text-center text-gray-500 col-span-full">No articles found.</p>';
+                    return;
+                }
+
+                articlesDisplay.innerHTML = articles.map(article => `
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                        <img src="${article.imageUrl || '/assets/images/placeholder-article.jpg'}" alt="${article.title || 'Article Image'}" class="w-full h-48 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold mb-2 text-gray-900">${article.title}</h3>
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mb-2 px-2.5 py-0.5 rounded capitalize">${article.category}</span>
+                            <p class="text-gray-600 mb-4 text-sm leading-relaxed flex-grow">
+                                ${article.summary ? article.summary : '<i>Summary not available. Click Read More.</i>'}
+                            </p>
+                            <div class="mb-3">
+                                ${article.tags && article.tags.length > 0 ? article.tags.map(tag => `<span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2">#${tag}</span>`).join('') : '<span class="text-xs text-gray-500">No tags</span>'}
+                            </div>
+                            <p class="text-xs text-gray-500 mb-4">Last updated: ${formatDate(article.updatedAt)}</p>
+                            <div class="mt-auto pt-3 border-t border-gray-200 flex justify-end space-x-2">
+                                <button onclick="editArticle('${article._id}')" class="text-sm bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md flex items-center">
+                                    <i class="fas fa-edit mr-2"></i>Edit
+                                </button>
+                                <button onclick="deleteArticle('${article._id}', '${article.title}')" style="border: 1px solid red; color: red;" class="text-sm bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md flex items-center">
+                                    <i class="fas fa-trash-alt mr-2"></i>Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Failed to load articles:', error);
+                articlesDisplay.innerHTML = '<p class="text-center text-red-500 col-span-full">Error loading articles. Please try again.</p>';
+                showAdminError("Could not load articles.", error.message);
+            }
+        }
+
+        function closeArticleModal() {
+            document.getElementById('articleModal').classList.add('hidden');
+        }
+
+        async function saveArticle(event) {
+            event.preventDefault();
+            const articleId = document.getElementById('articleId').value;
+            const title = document.getElementById('articleTitleInput').value;
+            const category = document.getElementById('articleCategoryInput').value;
+            const tags = document.getElementById('articleTagsInput').value.split(',').map(tag => tag.trim()).filter(tag => tag);
+            const content = document.getElementById('articleContentInput').value;
+            const imageUrl = document.getElementById('articleImageUrlInput').value;
+            const summary = document.getElementById('articleSummaryInput').value;
+
+            const articleData = { title, category, tags, content, imageUrl, summary };
+
+            const saveButton = document.getElementById('saveArticleBtn');
+            const originalButtonText = saveButton.innerHTML;
+            saveButton.disabled = true;
+            saveButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Saving...';
+
+            try {
+                let response;
+                if (articleId) { // Update existing article
+                    response = await fetchWithAuth(`/api/articles/${articleId}`, {
+                        method: 'PUT',
+                        body: JSON.stringify(articleData)
+                    });
+                } else { // Create new article
+                    response = await fetchWithAuth('/api/articles', {
+                        method: 'POST',
+                        body: JSON.stringify(articleData)
+                    });
+                }
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.message || (result.errors ? result.errors[0].msg : 'Failed to save article'));
+                
+                closeArticleModal();
+                loadArticles(); // Refresh table
+                // Add success message here
+            } catch (error) {
+                console.error("Error saving article:", error);
+                showAdminError("Failed to save article.", error.message);
+            } finally {
+                saveButton.disabled = false;
+                saveButton.innerHTML = originalButtonText;
+            }
+        }
+
+        async function editArticle(articleId) {
+             try {
+                const response = await fetchWithAuth(`/api/articles/${articleId}`);
+                if (!response.ok) throw new Error('Failed to fetch article for editing.');
+                const article = await response.json();
+
+                document.getElementById('articleId').value = article._id;
+                document.getElementById('articleModalTitle').textContent = 'Edit Article';
+                document.getElementById('articleTitleInput').value = article.title;
+                document.getElementById('articleCategoryInput').value = article.category;
+                document.getElementById('articleTagsInput').value = article.tags.join(', ');
+                document.getElementById('articleContentInput').value = article.content;
+                document.getElementById('articleImageUrlInput').value = article.imageUrl || '';
+                document.getElementById('articleSummaryInput').value = article.summary || '';
+
+                document.getElementById('articleModal').classList.remove('hidden');
+            } catch (error) {
+                console.error("Error fetching article for edit:", error);
+                showAdminError("Could not load article for editing.", error.message);
+            }
+        }
+
+        async function deleteArticle(articleId, articleTitle) {
+            if (!confirm(`Are you sure you want to delete the article "${articleTitle}"?`)) return;
+
+            try {
+                const response = await fetchWithAuth(`/api/articles/${articleId}`, { method: 'DELETE' });
+                if (!response.ok) {
+                     const errorData = await response.json().catch(() => ({ message: 'Failed to delete article' }));
+                    throw new Error(errorData.message);
+                }
+                loadArticles(); // Refresh table
+                 // Add success message here
+            } catch (error) {
+                console.error("Error deleting article:", error);
+                showAdminError("Failed to delete article.", error.message);
+            }
+        }
+    </script>
+</body>
+</html> 

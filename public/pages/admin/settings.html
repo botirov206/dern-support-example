@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Settings - Dern-Support</title>
+    <link href="/css/output.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-inter">
+    <nav class="bg-gray-900 text-white fixed w-full top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/admin" class="flex items-center space-x-2">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                        <span class="font-bold text-xl">Admin Panel</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="/admin" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800"> <i class="fas fa-chart-line mr-2"></i> Dashboard </a>
+                        <a href="/admin/requests" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800"> <i class="fas fa-ticket-alt mr-2"></i> Support Requests </a>
+                        <a href="/admin/users" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800"> <i class="fas fa-users mr-2"></i> Users </a>
+                        <a href="/admin/articles" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800"> <i class="fas fa-book mr-2"></i> Knowledge Base </a>
+                        <div class="relative" id="adminMenu">
+                            <button id="adminMenuBtn" class="flex items-center px-3 py-2 rounded-md text-sm font-medium bg-gray-800"> <!-- Active state for settings -->
+                                <i class="fas fa-user-shield mr-2"></i> <span id="adminName">Admin</span> <i class="fas fa-chevron-down ml-2"></i>
+                            </button>
+                            <div id="adminMenuDropdown" class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                                <div class="py-1">
+                                    <a href="/admin/settings" class="block px-4 py-2 text-sm text-gray-700 bg-gray-100"> <!-- Active state for settings -->
+                                        <i class="fas fa-cog mr-2"></i> Settings
+                                    </a>
+                                    <button id="logoutBtn" class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white shadow rounded-lg p-6">
+                <h1 class="text-2xl font-semibold text-gray-900 mb-6">Admin Settings</h1>
+                <div class="text-center text-gray-500">
+                    <i class="fas fa-cogs fa-3x mb-4"></i>
+                    <p>Admin settings page is currently under construction.</p>
+                    <p>Future settings related to system configuration, API keys, or other administrative controls will appear here.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!initProtectedPage(true)) return;
+
+            const adminMenuBtn = document.getElementById('adminMenuBtn');
+            const adminMenuDropdown = document.getElementById('adminMenuDropdown');
+            const adminNameSpan = document.getElementById('adminName');
+            const currentUser = getCurrentUser();
+            if(currentUser && currentUser.name) adminNameSpan.textContent = currentUser.name;
+
+            if (adminMenuBtn && adminMenuDropdown) {
+                adminMenuBtn.addEventListener('click', (e) => { 
+                    e.stopPropagation(); 
+                    adminMenuDropdown.classList.toggle('hidden'); 
+                });
+                // Make settings active in dropdown and main nav button
+                adminMenuBtn.classList.add('bg-gray-800'); // Active state for button
+                const settingsLink = adminMenuDropdown.querySelector('a[href="/admin/settings"]');
+                if(settingsLink) settingsLink.classList.add('bg-gray-100', 'font-semibold');
+
+                document.addEventListener('click', (e) => {
+                    if (adminMenuBtn && !adminMenuBtn.contains(e.target) && adminMenuDropdown && !adminMenuDropdown.contains(e.target)) {
+                        adminMenuDropdown.classList.add('hidden');
+                    }
+                });
+            }
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) logoutBtn.addEventListener('click', logout);
+        });
+    </script>
+</body>
+</html> 

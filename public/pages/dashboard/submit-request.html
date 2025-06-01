@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Request - Dern-Support</title>
+    <link href="/css/output.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-inter">
+    <!-- Navigation -->
+    <nav class="bg-blue-900 text-white fixed w-full top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/dashboard" class="flex items-center space-x-2">
+                        <i class="fas fa-laptop-medical text-2xl"></i>
+                        <span class="font-bold text-xl">Dern-Support</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="/dashboard" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-800">
+                            <i class="fas fa-chart-line mr-2"></i> Dashboard
+                        </a>
+                        <a href="/submit-request" class="flex items-center px-3 py-2 rounded-md text-sm font-medium bg-blue-800">
+                            <i class="fas fa-paper-plane mr-2"></i> New Request
+                        </a>
+                        <a href="/dashboard/knowledge-base" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-800">
+                            <i class="fas fa-book mr-2"></i> Knowledge Base
+                        </a>
+                        <div class="relative" id="userMenu">
+                            <button id="userMenuBtn" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-800">
+                                <i class="fas fa-user-circle mr-2"></i>
+                                <span id="userName">Account</span>
+                                <i class="fas fa-chevron-down ml-2"></i>
+                            </button>
+                            <div id="userMenuDropdown" class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                                <div class="py-1">
+                                    <a href="/account" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        <i class="fas fa-cog mr-2"></i> Settings
+                                    </a>
+                                    <button id="logoutBtn" class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="px-6 py-4 bg-blue-900 text-white">
+                    <h1 class="text-xl font-semibold">Submit Support Request</h1>
+                    <p class="text-blue-100 text-sm mt-1">Please provide details about your technical issue</p>
+                </div>
+
+                <form id="supportRequestForm" class="p-6 space-y-6">
+                    <div>
+                        <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                        <select name="category" id="category" required class="mt-1 block w-full py-3 px-4 text-base text-gray-900 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <option value="">Select a category</option>
+                            <option value="hardware">Hardware Issue</option>
+                            <option value="software">Software Problem</option>
+                            <option value="network">Network Connectivity</option>
+                            <option value="security">Security Concern</option>
+                            <option value="data">Data Recovery</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <p id="category-error" class="mt-1 text-xs text-red-600 hidden">Please select a category.</p>
+                    </div>
+
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                        <input type="text" name="subject" id="subject" required placeholder="Brief description of the issue"
+                            class="mt-1 block w-full py-3 px-4 text-base text-gray-900 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <p id="subject-error" class="mt-1 text-xs text-red-600 hidden">Subject is required.</p>
+                    </div>
+
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                        <textarea name="description" id="description" required rows="4" placeholder="Please provide detailed information about your issue"
+                            class="mt-1 block w-full py-3 px-4 text-base text-gray-900 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+                        <p id="description-error" class="mt-1 text-xs text-red-600 hidden">Description is required.</p>
+                    </div>
+
+                    <div>
+                        <label for="urgency" class="block text-sm font-medium text-gray-700 mb-1">Urgency Level</label>
+                        <select name="urgency" id="urgency" required class="mt-1 block w-full py-3 px-4 text-base text-gray-900 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <option value="low">Low - Not time sensitive</option>
+                            <option value="medium">Medium - Needs attention within 24 hours</option>
+                            <option value="high">High - Critical issue requiring immediate attention</option>
+                        </select>
+                        <p id="urgency-error" class="mt-1 text-xs text-red-600 hidden">Please select an urgency level.</p>
+                    </div>
+
+                    <div>
+                        <label for="contactMethod" class="block text-sm font-medium text-gray-700 mb-1">Preferred Contact Method</label>
+                        <select name="contactMethod" id="contactMethod" required class="mt-1 block w-full py-3 px-4 text-base text-gray-900 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <option value="email">Email</option>
+                            <option value="phone">Phone</option>
+                        </select>
+                        <p id="contactMethod-error" class="mt-1 text-xs text-red-600 hidden">Please select a contact method.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Attachments (Optional)</label>
+                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                            <div class="space-y-1 text-center">
+                                <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl mb-3"></i>
+                                <div class="flex text-sm text-gray-600">
+                                    <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-900 hover:text-blue-800">
+                                        <span>Upload files</span>
+                                        <input id="file-upload" name="files" type="file" class="sr-only" multiple>
+                                    </label>
+                                    <p class="pl-1">or drag and drop</p>
+                                </div>
+                                <p class="text-xs text-gray-500">PNG, JPG, PDF up to 10MB</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="requestSubmitError" class="text-sm text-red-600 hidden"></div>
+                    <div class="flex items-center space-x-4 pt-2">
+                        <button type="submit" class="flex-1 bg-blue-900 text-white py-3 px-4 rounded-md hover:bg-blue-800 flex items-center justify-center text-base font-medium">
+                            <i class="fas fa-paper-plane mr-2"></i> Submit Request
+                        </button>
+                        <button type="button" onclick="window.location.href='/dashboard'" class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200 flex items-center justify-center">
+                            <i class="fas fa-times mr-2"></i> Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize protected page
+            if (!initProtectedPage()) {
+                return; // Redirects if not authenticated
+            }
+
+            const supportRequestForm = document.getElementById('supportRequestForm');
+
+            // Helper function to apply input styles (can be moved to main.js if used across more pages)
+            function setInputState(inputElement, state, message = '') {
+                const errorElement = document.getElementById(inputElement.id + '-error');
+                inputElement.classList.remove('border-gray-300', 'focus:border-blue-500', 'focus:ring-blue-500'); 
+                inputElement.classList.remove('border-red-500', 'text-red-900', 'placeholder-red-300', 'focus:border-red-500', 'focus:ring-red-500');
+                inputElement.classList.remove('border-green-500', 'text-green-900', 'placeholder-green-300', 'focus:border-green-500', 'focus:ring-green-500');
+
+                if (errorElement) errorElement.classList.add('hidden');
+
+                if (state === 'error') {
+                    inputElement.classList.add('border-red-500', 'text-red-900', 'placeholder-red-300', 'focus:border-red-500', 'focus:ring-red-500');
+                    if (errorElement && message) {
+                        errorElement.textContent = message;
+                        errorElement.classList.remove('hidden');
+                    }
+                } else if (state === 'success') {
+                    inputElement.classList.add('border-green-500', 'text-green-900', 'placeholder-green-300', 'focus:border-green-500', 'focus:ring-green-500');
+                } else { 
+                    inputElement.classList.add('border-gray-300', 'focus:border-blue-500', 'focus:ring-blue-500');
+                }
+            }
+            
+            // Add real-time validation listeners to the support request form
+            supportRequestForm.querySelectorAll('input, select, textarea').forEach(input => {
+                 if(input.type === 'file') return; // Skip file inputs for now
+                 input.addEventListener('input', () => {
+                    if (input.checkValidity()) {
+                        setInputState(input, 'success');
+                    } else {
+                         // Optionally show error on type if you want instant feedback for invalid patterns
+                    }
+                });
+                input.addEventListener('invalid', (e) => {
+                    setInputState(input, 'error', input.validationMessage);
+                });
+                 input.addEventListener('blur', () => {
+                    if (!input.checkValidity() && input.value.trim() !== '') { 
+                       setInputState(input, 'error', input.validationMessage);
+                    } else if (input.checkValidity() && input.value.trim() !== '') {
+                        setInputState(input, 'success');
+                    } else if (input.value.trim() === ''){
+                        setInputState(input, 'default'); 
+                    }
+                });
+            });
+
+            // User menu dropdown (copied from dashboard for consistency, can be centralized)
+            const userMenuBtn = document.getElementById('userMenuBtn');
+            const userMenuDropdown = document.getElementById('userMenuDropdown');
+            if (userMenuBtn && userMenuDropdown) {
+                userMenuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    userMenuDropdown.classList.toggle('hidden');
+                });
+                document.addEventListener('click', (e) => {
+                    if (!userMenuBtn.contains(e.target) && !userMenuDropdown.contains(e.target)) {
+                        userMenuDropdown.classList.add('hidden');
+                    }
+                });
+            }
+            
+            // Handle form submission
+            const submitButton = supportRequestForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            const requestErrorDiv = document.getElementById('requestSubmitError');
+
+            supportRequestForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                requestErrorDiv.classList.add('hidden');
+                requestErrorDiv.textContent = '';
+
+                let formIsValid = true;
+                supportRequestForm.querySelectorAll('input[required], select[required], textarea[required]').forEach(input => {
+                    if (!input.checkValidity()) {
+                        setInputState(input, 'error', input.validationMessage);
+                        formIsValid = false;
+                    } else {
+                        setInputState(input, 'success');
+                    }
+                });
+                
+                if (!formIsValid) {
+                    requestErrorDiv.textContent = 'Please correct the errors above.';
+                    requestErrorDiv.classList.remove('hidden');
+                    return;
+                }
+
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
+
+                const formData = {
+                    category: supportRequestForm.category.value,
+                    subject: supportRequestForm.subject.value,
+                    description: supportRequestForm.description.value,
+                    urgency: supportRequestForm.urgency.value,
+                    contactMethod: supportRequestForm.contactMethod.value
+                };
+
+                try {
+                    const response = await createSupportRequest(formData); // This function will be in main.js
+                    alert('Support request submitted successfully! Your quote is $' + response.request.quote);
+                    window.location.href = '/dashboard';
+                } catch (error) {
+                    // alert('Failed to submit support request: ' + error.message);
+                    requestErrorDiv.textContent = 'Failed to submit: ' + error.message;
+                    requestErrorDiv.classList.remove('hidden');
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalButtonText;
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

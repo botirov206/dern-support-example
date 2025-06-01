@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dern-Support - IT Technical Support</title>
+    <link href="/css/output.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-inter min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-blue-900 text-white fixed w-full top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2">
+                        <i class="fas fa-laptop-medical text-2xl"></i>
+                        <span class="font-bold text-xl">Dern-Support</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="/" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-800">
+                            <i class="fas fa-home mr-2"></i> Home
+                        </a>
+                        <a href="/knowledge-base" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-800">
+                            <i class="fas fa-book mr-2"></i> Knowledge Base
+                        </a>
+                        <a href="/support" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-800">
+                            <i class="fas fa-headset mr-2"></i> Support
+                        </a>
+                        <button id="loginBtn" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-800">
+                            <i class="fas fa-sign-in-alt mr-2"></i> Login
+                        </button>
+                        <button id="signupBtn" class="flex items-center bg-green-500 px-3 py-2 rounded-md text-sm font-medium hover:bg-green-600">
+                            <i class="fas fa-user-plus mr-2"></i> Sign Up
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="flex-grow pt-16">
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="md:w-1/2 mb-10 md:mb-0">
+                        <h1 class="text-5xl font-bold mb-6 leading-tight">Professional IT Support for Your Business</h1>
+                        <p class="text-xl mb-8 text-gray-200">Get expert technical support when you need it most. Fast, reliable, and professional service.</p>
+                        <button id="getStartedBtn" class="group bg-green-500 px-6 py-3 rounded-lg text-lg font-medium hover:bg-green-600 transition-all duration-300 flex items-center space-x-2">
+                            <span>Get Started</span>
+                            <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                        </button>
+                    </div>
+                    <div class="md:w-1/2 flex justify-center">
+                        <div class="relative">
+                            <div class="absolute inset-0 bg-blue-500 rounded-lg transform rotate-3 opacity-20"></div>
+                            <div class="relative bg-white p-6 rounded-lg shadow-2xl">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="text-center p-4 bg-blue-50 rounded-lg">
+                                        <i class="fas fa-clock text-4xl text-blue-900 mb-2"></i>
+                                        <h3 class="text-blue-900 font-semibold">24/7 Support</h3>
+                                    </div>
+                                    <div class="text-center p-4 bg-green-50 rounded-lg">
+                                        <i class="fas fa-shield-alt text-4xl text-green-600 mb-2"></i>
+                                        <h3 class="text-green-600 font-semibold">Secure Service</h3>
+                                    </div>
+                                    <div class="text-center p-4 bg-purple-50 rounded-lg">
+                                        <i class="fas fa-tools text-4xl text-purple-600 mb-2"></i>
+                                        <h3 class="text-purple-600 font-semibold">Expert Tools</h3>
+                                    </div>
+                                    <div class="text-center p-4 bg-orange-50 rounded-lg">
+                                        <i class="fas fa-users text-4xl text-orange-600 mb-2"></i>
+                                        <h3 class="text-orange-600 font-semibold">Team Support</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-12">Our Services</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-blue-900 mb-4">
+                            <i class="fas fa-desktop text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Technical Support</h3>
+                        <p class="text-gray-600">Expert assistance for hardware and software issues, available when you need it.</p>
+                        <a href="/support" class="mt-4 inline-flex items-center text-blue-900 hover:text-blue-700">
+                            Learn More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-green-600 mb-4">
+                            <i class="fas fa-book-open text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Knowledge Base</h3>
+                        <p class="text-gray-600">Access our comprehensive library of technical articles and solutions.</p>
+                        <a href="/knowledge-base" class="mt-4 inline-flex items-center text-blue-900 hover:text-blue-700">
+                            Learn More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-purple-600 mb-4">
+                            <i class="fas fa-building text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Business Solutions</h3>
+                        <p class="text-gray-600">Tailored IT support packages for businesses of all sizes.</p>
+                        <a href="/support" class="mt-4 inline-flex items-center text-blue-900 hover:text-blue-700">
+                            Learn More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="p-6">
+                        <div class="text-4xl font-bold text-blue-900 mb-2">500+</div>
+                        <div class="text-gray-600">Happy Clients</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-4xl font-bold text-blue-900 mb-2">24/7</div>
+                        <div class="text-gray-600">Support Available</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-4xl font-bold text-blue-900 mb-2">100+</div>
+                        <div class="text-gray-600">Expert Articles</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-4xl font-bold text-blue-900 mb-2">99%</div>
+                        <div class="text-gray-600">Success Rate</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-laptop-medical text-2xl"></i>
+                        <h4 class="text-lg font-semibold">Dern-Support</h4>
+                    </div>
+                    <p class="text-gray-400">Professional IT support services for businesses and individuals.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/support" class="text-gray-400 hover:text-white flex items-center">
+                            <i class="fas fa-chevron-right text-sm mr-2"></i> Get Support
+                        </a></li>
+                        <li><a href="/knowledge-base" class="text-gray-400 hover:text-white flex items-center">
+                            <i class="fas fa-chevron-right text-sm mr-2"></i> Knowledge Base
+                        </a></li>
+                        <li><a href="/contact" class="text-gray-400 hover:text-white flex items-center">
+                            <i class="fas fa-chevron-right text-sm mr-2"></i> Contact Us
+                        </a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            support@dern-support.com
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2"></i>
+                            +998 90 000 00 00
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-clock mr-2"></i>
+                            Mon-Fri 9am-6pm
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
+                <p>&copy; 2025 Dern-Support. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Templates -->
+    <div id="loginModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="text-2xl font-bold">Login</h3>
+                <button onclick="closeModal('loginModal')" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label for="login-email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" name="email" id="login-email" required class="mt-1 block w-full py-3 px-4 text-base text-gray-900 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="you@example.com">
+                    <p id="login-email-error" class="mt-1 text-xs text-red-600 hidden">Please enter a valid email.</p>
+                </div>
+                <div>
+                    <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" name="password" id="login-password" required class="mt-1 block w-full py-3 px-4 text-base text-gray-900 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="••••••••">
+                    <p id="login-password-error" class="mt-1 text-xs text-red-600 hidden">Password is required.</p>
+                </div>
+                <div id="loginError" class="text-sm text-red-600 hidden"></div>
+                <button type="submit" class="w-full bg-blue-900 text-white py-3 px-4 rounded-md hover:bg-blue-800 flex items-center justify-center text-base font-medium">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Login
+                </button>
+                <p class="text-center text-sm text-gray-600">
+                    Don't have an account? 
+                    <button type="button" onclick="showModal('signupModal'); closeModal('loginModal')" class="text-blue-900 hover:text-blue-700">Sign up</button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <div id="signupModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="text-2xl font-bold">Sign Up</h3>
+                <button onclick="closeModal('signupModal')" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="signupForm" class="space-y-6">
+                <div>
+                    <label for="signup-name" class="block text-sm font-medium text-gray-700">Name</label>
+                    <input type="text" name="name" id="signup-name" required class="mt-1 block w-full py-3 px-4 text-base text-gray-900 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Your Name">
+                    <p id="signup-name-error" class="mt-1 text-xs text-red-600 hidden">Name is required.</p>
+                </div>
+                <div>
+                    <label for="signup-email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" name="email" id="signup-email" required class="mt-1 block w-full py-3 px-4 text-base text-gray-900 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="you@example.com">
+                    <p id="signup-email-error" class="mt-1 text-xs text-red-600 hidden">Please enter a valid email.</p>
+                </div>
+                <div>
+                    <label for="signup-password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" name="password" id="signup-password" required minlength="6" class="mt-1 block w-full py-3 px-4 text-base text-gray-900 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Create a password">
+                    <p class="mt-1 text-xs text-gray-500">Password must be at least 6 characters long.</p>
+                    <p id="signup-password-error" class="mt-1 text-xs text-red-600 hidden">Password must be at least 6 characters.</p>
+                </div>
+                <div>
+                    <label for="signup-accountType" class="block text-sm font-medium text-gray-700">Account Type</label>
+                    <select name="accountType" id="signup-accountType" required class="mt-1 block w-full py-3 px-4 text-base text-gray-900 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <option value="">Select account type</option>
+                        <option value="individual">Individual</option>
+                        <option value="business">Business</option>
+                    </select>
+                    <p id="signup-accountType-error" class="mt-1 text-xs text-red-600 hidden">Please select an account type.</p>
+                </div>
+                <div>
+                    <label for="signup-address" class="block text-sm font-medium text-gray-700">Address</label>
+                    <textarea name="address" id="signup-address" required rows="2" class="mt-1 block w-full py-3 px-4 text-base text-gray-900 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Your Street Address, City, Postal Code"></textarea>
+                    <p id="signup-address-error" class="mt-1 text-xs text-red-600 hidden">Address is required.</p>
+                </div>
+                <div id="signupError" class="text-sm text-red-600 hidden"></div>
+                <button type="submit" class="w-full bg-green-500 text-white py-3 px-4 rounded-md hover:bg-green-600 flex items-center justify-center text-base font-medium">
+                    <i class="fas fa-user-plus mr-2"></i> Sign Up
+                </button>
+                <p class="text-center text-sm text-gray-600">
+                    Already have an account? 
+                    <button type="button" onclick="showModal('loginModal'); closeModal('signupModal')" class="text-blue-900 hover:text-blue-700">Login</button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+    <script>
+        // Modal functions
+        function showModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('fixed')) {
+                e.target.classList.add('hidden');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check for authentication error
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('error') === 'auth_required') {
+                showModal('loginModal');
+            }
+
+            // Show modals on button click
+            document.getElementById('loginBtn').addEventListener('click', () => showModal('loginModal'));
+            document.getElementById('signupBtn').addEventListener('click', () => showModal('signupModal'));
+            
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+
+            // Helper function to apply input styles
+            function setInputState(inputElement, state, message = '') {
+                const errorElement = document.getElementById(inputElement.id + '-error');
+                inputElement.classList.remove('border-gray-300', 'focus:border-blue-500', 'focus:ring-blue-500'); // Reset default/focus
+                inputElement.classList.remove('border-red-500', 'text-red-900', 'placeholder-red-300', 'focus:border-red-500', 'focus:ring-red-500'); // Reset error
+                inputElement.classList.remove('border-green-500', 'text-green-900', 'placeholder-green-300', 'focus:border-green-500', 'focus:ring-green-500'); // Reset success
+
+                if (errorElement) errorElement.classList.add('hidden');
+
+                if (state === 'error') {
+                    inputElement.classList.add('border-red-500', 'text-red-900', 'placeholder-red-300', 'focus:border-red-500', 'focus:ring-red-500');
+                    if (errorElement && message) {
+                        errorElement.textContent = message;
+                        errorElement.classList.remove('hidden');
+                    }
+                } else if (state === 'success') {
+                    inputElement.classList.add('border-green-500', 'text-green-900', 'placeholder-green-300', 'focus:border-green-500', 'focus:ring-green-500');
+                } else { // Default or typing
+                    inputElement.classList.add('border-gray-300', 'focus:border-blue-500', 'focus:ring-blue-500');
+                }
+            }
+            
+            // Add real-time validation listeners
+            function addRealTimeValidation(form) {
+                form.querySelectorAll('input, select, textarea').forEach(input => {
+                    input.addEventListener('input', () => {
+                        if (input.checkValidity()) {
+                            setInputState(input, 'success');
+                        } else {
+                            // Don't show error state immediately on input unless it was already an error
+                            // Or if you want instant feedback: setInputState(input, 'error', input.validationMessage);
+                        }
+                    });
+                    input.addEventListener('invalid', (e) => { // When form.reportValidity() is called or on submit
+                        setInputState(input, 'error', input.validationMessage);
+                    });
+                     input.addEventListener('blur', () => { // Validate on blur
+                        if (!input.checkValidity() && input.value.trim() !== '') { // only show error if not empty and invalid
+                           setInputState(input, 'error', input.validationMessage);
+                        } else if (input.checkValidity() && input.value.trim() !== '') {
+                            setInputState(input, 'success');
+                        } else if (input.value.trim() === ''){
+                            setInputState(input, 'default'); // Reset if empty on blur
+                        }
+                    });
+                });
+            }
+
+            if (loginForm) addRealTimeValidation(loginForm);
+            if (signupForm) addRealTimeValidation(signupForm);
+
+            // Handle signup form submission
+            signupForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const errorDiv = document.getElementById('signupError');
+                errorDiv.classList.add('hidden');
+                errorDiv.textContent = '';
+
+                let formIsValid = true;
+                signupForm.querySelectorAll('input, select, textarea').forEach(input => {
+                    if (!input.checkValidity()) {
+                        setInputState(input, 'error', input.validationMessage);
+                        formIsValid = false;
+                    } else {
+                        setInputState(input, 'success');
+                    }
+                });
+
+                if (!formIsValid) {
+                    errorDiv.textContent = 'Please correct the errors above.';
+                    errorDiv.classList.remove('hidden');
+                    return;
+                }
+
+                try {
+                    const formData = {
+                        name: e.target.name.value,
+                        email: e.target.email.value,
+                        password: e.target.password.value,
+                        accountType: e.target.accountType.value,
+                        address: e.target.address.value
+                    };
+
+                    const response = await fetch('/api/users/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Registration failed');
+                    }
+
+                    // Store auth data
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('currentUser', JSON.stringify(data.user));
+
+                    // Redirect to dashboard
+                    window.location.href = '/dashboard';
+                } catch (error) {
+                    errorDiv.textContent = error.message;
+                    errorDiv.classList.remove('hidden');
+                }
+            });
+
+            // Handle login form submission
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const errorDiv = document.getElementById('loginError');
+                errorDiv.classList.add('hidden');
+                errorDiv.textContent = '';
+
+                let formIsValid = true;
+                loginForm.querySelectorAll('input').forEach(input => {
+                    if (!input.checkValidity()) {
+                        setInputState(input, 'error', input.validationMessage);
+                        formIsValid = false;
+                    } else {
+                        setInputState(input, 'success');
+                    }
+                });
+
+                if (!formIsValid) {
+                     errorDiv.textContent = 'Please correct the errors above.';
+                    errorDiv.classList.remove('hidden');
+                    return;
+                }
+
+                try {
+                    const email = e.target.email.value;
+                    const password = e.target.password.value;
+                    await login(email, password);
+                } catch (error) {
+                    errorDiv.textContent = error.message;
+                    errorDiv.classList.remove('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

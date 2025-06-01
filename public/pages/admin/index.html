@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Dern-Support</title>
+    <link href="/css/output.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-inter">
+    <!-- Navigation -->
+    <nav class="bg-gray-900 text-white fixed w-full top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/admin" class="flex items-center space-x-2">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                        <span class="font-bold text-xl">Admin Panel</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="/admin" class="flex items-center px-3 py-2 rounded-md text-sm font-medium bg-gray-800">
+                            <i class="fas fa-chart-line mr-2"></i> Dashboard
+                        </a>
+                        <a href="/admin/requests" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800">
+                            <i class="fas fa-ticket-alt mr-2"></i> Support Requests
+                        </a>
+                        <a href="/admin/users" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800">
+                            <i class="fas fa-users mr-2"></i> Users
+                        </a>
+                        <a href="/admin/articles" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800">
+                            <i class="fas fa-book mr-2"></i> Knowledge Base
+                        </a>
+                        <div class="relative" id="adminMenu">
+                            <button id="adminMenuBtn" class="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800">
+                                <i class="fas fa-user-shield mr-2"></i>
+                                <span id="adminName">Admin</span>
+                                <i class="fas fa-chevron-down ml-2"></i>
+                            </button>
+                            <div id="adminMenuDropdown" class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                                <div class="py-1">
+                                    <a href="/admin/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        <i class="fas fa-cog mr-2"></i> Settings
+                                    </a>
+                                    <button id="logoutBtn" class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Welcome Section -->
+            <div class="mb-8">
+                <h1 class="text-2xl font-bold text-gray-900" id="welcomeMessage">Admin Dashboard</h1>
+                <p class="text-gray-600">System overview and management</p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-blue-100 text-blue-900">
+                            <i class="fas fa-users text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-gray-500 text-sm">Total Users</p>
+                            <h3 class="text-xl font-bold" id="totalUsers">0</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-yellow-100 text-yellow-900">
+                            <i class="fas fa-ticket-alt text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-gray-500 text-sm">Active Requests</p>
+                            <h3 class="text-xl font-bold" id="activeRequests">0</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100 text-green-900">
+                            <i class="fas fa-check-circle text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-gray-500 text-sm">Resolved Today</p>
+                            <h3 class="text-xl font-bold" id="resolvedToday">0</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-purple-100 text-purple-900">
+                            <i class="fas fa-dollar-sign text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-gray-500 text-sm">Revenue Today</p>
+                            <h3 class="text-xl font-bold" id="revenueToday">$0</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Recent Support Requests -->
+                <div class="bg-white rounded-lg shadow">
+                    <div class="p-6 border-b border-gray-200">
+                        <h2 class="text-lg font-semibold text-gray-900">Recent Support Requests</h2>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Request</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentRequestsBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-4 border-t border-gray-200">
+                        <a href="/admin/requests" class="text-blue-900 hover:text-blue-700 font-medium">
+                            View All Requests <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Recent Users -->
+                <div class="bg-white rounded-lg shadow">
+                    <div class="p-6 border-b border-gray-200">
+                        <h2 class="text-lg font-semibold text-gray-900">Recent Users</h2>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentUsersBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-4 border-t border-gray-200">
+                        <a href="/admin/users" class="text-blue-900 hover:text-blue-700 font-medium">
+                            View All Users <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Quick Actions</h3>
+                    <div class="space-y-4">
+                        <a href="/admin/requests" class="block px-4 py-2 bg-blue-900 text-white rounded hover:bg-blue-800 text-center">
+                            <i class="fas fa-cogs mr-2"></i> Manage Requests
+                        </a>
+                        <a href="/admin/articles" class="block px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 text-center">
+                            <i class="fas fa-plus-circle mr-2"></i> New Article
+                        </a>
+                        <a href="/admin/users" class="block px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 text-center mt-2">
+                            <i class="fas fa-users-cog mr-2"></i> Manage Users
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">System Status</h3>
+                    <div class="space-y-2">
+                        <p class="text-gray-600"><i class="fas fa-server mr-2"></i> Server Status: <span class="text-green-600">Online</span></p>
+                        <p class="text-gray-600"><i class="fas fa-database mr-2"></i> Database: <span class="text-green-600">Connected</span></p>
+                        <p class="text-gray-600"><i class="fas fa-memory mr-2"></i> Memory Usage: <span id="memoryUsage">Loading...</span></p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Support Team</h3>
+                    <div class="space-y-2">
+                        <p class="text-gray-600"><i class="fas fa-user-check mr-2"></i> Active Support Staff: <span id="activeStaff">0</span></p>
+                        <p class="text-gray-600"><i class="fas fa-clock mr-2"></i> Average Response Time: <span id="avgResponseTime">Loading...</span></p>
+                        <p class="text-gray-600"><i class="fas fa-chart-line mr-2"></i> Satisfaction Rate: <span id="satisfactionRate">Loading...</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/main.js"></script>
+    <script src="/assets/js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Initialize protected page for admin
+            if (!initProtectedPage(true)) { // true indicates admin page
+                return;
+            }
+
+            // Handle admin menu dropdown (similar to user menu)
+            const adminMenuBtn = document.getElementById('adminMenuBtn');
+            const adminMenuDropdown = document.getElementById('adminMenuDropdown');
+            const adminNameSpan = document.getElementById('adminName');
+            const currentUser = getCurrentUser(); // from main.js
+
+            if(currentUser && currentUser.name) {
+                adminNameSpan.textContent = currentUser.name;
+            }
+
+            if (adminMenuBtn && adminMenuDropdown) {
+                adminMenuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    adminMenuDropdown.classList.toggle('hidden');
+                });
+                document.addEventListener('click', (e) => {
+                    if (adminMenuBtn && !adminMenuBtn.contains(e.target) && adminMenuDropdown && !adminMenuDropdown.contains(e.target)) {
+                        adminMenuDropdown.classList.add('hidden');
+                    }
+                });
+            }
+            
+            // Logout button (if not already handled globally in main.js for admin pages)
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('currentUser');
+                    window.location.href = '/'; // Redirect to landing page
+                });
+            }
+
+            // Load dashboard data
+            try {
+                const data = await getAdminDashboardData(); // from admin.js
+                console.log('Admin dashboard data:', data);
+
+                document.getElementById('totalUsers').textContent = data.totalUsers || 0;
+                document.getElementById('activeRequests').textContent = data.activeRequests || 0;
+                document.getElementById('resolvedToday').textContent = data.resolvedToday || 0;
+                document.getElementById('revenueToday').textContent = formatCurrency(data.revenueToday || 0); // Ensure formatCurrency is available
+
+                // Populate Recent Requests
+                const recentRequestsBody = document.getElementById('recentRequestsBody');
+                if (data.recentRequests && data.recentRequests.length > 0) {
+                    recentRequestsBody.innerHTML = data.recentRequests.map(req => `
+                        <tr class="hover:bg-gray-100">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${req.user ? req.user.name : 'N/A'}</td>
+                            <td class="px-6 py-4 text-sm text-gray-600 truncate" style="max-width: 200px;">${req.subject || 'No Subject'}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="${getStatusBadgeClasses(req.status)}">${req.status ? req.status.charAt(0).toUpperCase() + req.status.slice(1) : 'Unknown'}</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <a href="/admin/requests?requestId=${req._id}" class="text-blue-600 hover:text-blue-900">Details</a>
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    recentRequestsBody.innerHTML = '<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">No recent requests.</td></tr>';
+                }
+
+                // Populate Recent Users
+                const recentUsersBody = document.getElementById('recentUsersBody');
+                if (data.recentUsers && data.recentUsers.length > 0) {
+                    recentUsersBody.innerHTML = data.recentUsers.map(user => `
+                        <tr class="hover:bg-gray-100">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${user.name}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${user.email}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="${getAccountTypeBadgeClasses(user.role)}">${user.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'User'}</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <a href="/admin/users?userId=${user._id}" class="text-blue-600 hover:text-blue-900">View</a>
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    recentUsersBody.innerHTML = '<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">No recent users.</td></tr>';
+                }
+
+            } catch (error) {
+                console.error('Failed to load admin dashboard data:', error);
+                // Display a user-friendly error message on the page
+                const mainContent = document.querySelector('main > div');
+                if (mainContent) {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4';
+                    errorDiv.innerHTML = `<p><strong>Error:</strong> Failed to load dashboard data. ${error.message}</p>`;
+                    mainContent.insertBefore(errorDiv, mainContent.firstChild);
+                }
+            }
+            
+            // Load system metrics
+            try {
+                const metrics = await getSystemMetrics(); // from admin.js
+                console.log('System metrics:', metrics);
+                document.getElementById('memoryUsage').textContent = metrics.memoryUsage ? `${(metrics.memoryUsage.heapUsed / 1024 / 1024).toFixed(2)} MB` : 'N/A';
+                // These might need dedicated API endpoints or calculations if not part of getSystemMetrics
+                document.getElementById('activeStaff').textContent = metrics.activeAdmins || 0; // Assuming activeAdmins is part of metrics
+                document.getElementById('avgResponseTime').textContent = metrics.avgResponseTime || 'N/A';
+                document.getElementById('satisfactionRate').textContent = metrics.satisfactionRate || 'N/A';
+
+            } catch (error) {
+                console.error('Failed to load system metrics:', error);
+                document.getElementById('memoryUsage').textContent = 'Error';
+            }
+        });
+    </script>
+</body>
+</html> 
