@@ -1,18 +1,86 @@
 // Admin API endpoints
-const API_URL = '/api';
-
-// Fetch admin dashboard data
-async function getAdminDashboardData() {
-    try {
-        const response = await fetchWithAuth(`${API_URL}/admin/dashboard`);
-        if (!response.ok) throw new Error('Failed to fetch dashboard data');
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching dashboard data:', error);
-        showAdminError('Could not load dashboard overview. ');
-        throw error;
-    }
+if (typeof API_URL === 'undefined') {
+    window.API_URL = '/api';
 }
+
+// Import fetchWithAuth from main.js if not already available
+if (typeof fetchWithAuth === 'undefined') {
+    console.error('fetchWithAuth is not defined. Make sure main.js is loaded first.');
+}
+
+// Make functions globally available immediately
+(function(window) {
+    // Fetch admin dashboard data
+    window.getAdminDashboardData = async function() {
+        try {
+            const response = await fetchWithAuth(`${API_URL}/admin/dashboard`);
+            if (!response.ok) throw new Error('Failed to fetch dashboard data');
+            return await response.json();
+        } catch (error) {
+            console.error('Error fetching dashboard data:', error);
+            showAdminError('Could not load dashboard overview. ');
+            throw error;
+        }
+    };
+
+    // Fetch system metrics
+    window.getSystemMetrics = async function() {
+        try {
+            const response = await fetchWithAuth(`${API_URL}/admin/metrics`);
+            if (!response.ok) throw new Error('Failed to fetch metrics');
+            return await response.json();
+        } catch (error) {
+            console.error('Error fetching metrics:', error);
+            showAdminError('Could not load system metrics.');
+            throw error;
+        }
+    };
+
+    // Helper function to display errors on admin pages
+    window.showAdminError = function(message, details = '') {
+        console.error('Admin Error:', message, details);
+        // Simple alert for now, can be replaced with a more sophisticated UI element
+        alert(`Error: ${message} ${details ? details : ''}`);
+    };
+
+    // Helper function to format currency
+    window.formatCurrency = function(amount) {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }).format(amount || 0);
+    };
+
+    // Helper function to format status badges
+    window.getStatusBadgeClasses = function(status) {
+        const baseClasses = 'px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full';
+        switch (status) {
+            case 'completed':
+                return `${baseClasses} bg-green-100 text-green-800`;
+            case 'in-progress':
+                return `${baseClasses} bg-blue-100 text-blue-800`;
+            case 'pending':
+                return `${baseClasses} bg-yellow-100 text-yellow-800`;
+            case 'cancelled':
+                return `${baseClasses} bg-red-100 text-red-800`;
+            default:
+                return `${baseClasses} bg-gray-100 text-gray-800`;
+        }
+    };
+
+    // Helper function to format account type badges
+    window.getAccountTypeBadgeClasses = function(accountType) {
+        const baseClasses = 'px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full';
+        switch (accountType) {
+            case 'business':
+                return `${baseClasses} bg-purple-100 text-purple-800`;
+            case 'individual':
+                return `${baseClasses} bg-blue-100 text-blue-800`;
+            default:
+                return `${baseClasses} bg-gray-100 text-gray-800`;
+        }
+    };
+})(window);
 
 // Fetch support requests with pagination and filters
 async function getRequests(page = 1, limit = 10, filters = {}) {
@@ -88,19 +156,6 @@ async function updateUser(userId, data) {
     }
 }
 
-// Fetch system metrics
-async function getSystemMetrics() {
-    try {
-        const response = await fetchWithAuth(`${API_URL}/admin/metrics`);
-        if (!response.ok) throw new Error('Failed to fetch metrics');
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching metrics:', error);
-        showAdminError('Could not load system metrics.');
-        throw error;
-    }
-}
-
 // Fetch articles for admin management
 async function getArticles(filters = {}) {
     try {
@@ -132,14 +187,6 @@ async function getAdminUsers() {
     }
 }
 
-// Helper function to display errors on admin pages
-// Ensures a consistent way to show errors, can be expanded (e.g., to use a modal or specific div)
-function showAdminError(message, details = '') {
-    console.error('Admin Error:', message, details);
-    // Simple alert for now, can be replaced with a more sophisticated UI element
-    alert(`Error: ${message} ${details ? details : ''}`);
-}
-
 // Helper function to format dates
 function formatDate(date) {
     return new Date(date).toLocaleDateString('en-US', {
@@ -151,71 +198,11 @@ function formatDate(date) {
     });
 }
 
-// Helper function to format currency
-function formatCurrency(amount) {
-    return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD'
-    }).format(amount || 0);
-}
-
-// Helper function to format status badges
-function getStatusBadgeClasses(status) {
-    const baseClasses = 'px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full';
-    switch (status) {
-        case 'completed':
-            return `${baseClasses} bg-green-100 text-green-800`;
-        case 'in-progress':
-            return `${baseClasses} bg-blue-100 text-blue-800`;
-        case 'pending':
-            return `${baseClasses} bg-yellow-100 text-yellow-800`;
-        case 'cancelled':
-            return `${baseClasses} bg-red-100 text-red-800`;
-        default:
-            return `${baseClasses} bg-gray-100 text-gray-800`;
-    }
-}
-
-// Helper function to format urgency badges
-function getUrgencyBadgeClasses(urgency) {
-    const baseClasses = 'px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full';
-    switch (urgency) {
-        case 'high':
-            return `${baseClasses} bg-red-100 text-red-800`;
-        case 'medium':
-            return `${baseClasses} bg-yellow-100 text-yellow-800`;
-        case 'low':
-            return `${baseClasses} bg-green-100 text-green-800`;
-        default:
-            return `${baseClasses} bg-gray-100 text-gray-800`;
-    }
-}
-
-// Helper function to format account type badges
-function getAccountTypeBadgeClasses(accountType) {
-    const baseClasses = 'px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full';
-    switch (accountType) {
-        case 'business':
-            return `${baseClasses} bg-purple-100 text-purple-800`;
-        case 'individual':
-            return `${baseClasses} bg-blue-100 text-blue-800`;
-        default:
-            return `${baseClasses} bg-gray-100 text-gray-800`;
-    }
-}
-
 // Export functions for use in admin pages
-window.getAdminDashboardData = getAdminDashboardData;
 window.getRequests = getRequests;
 window.updateRequest = updateRequest;
 window.getUsers = getUsers;
 window.updateUser = updateUser;
-window.getSystemMetrics = getSystemMetrics;
 window.getArticles = getArticles;
 window.formatDate = formatDate;
-window.formatCurrency = formatCurrency;
-window.getStatusBadgeClasses = getStatusBadgeClasses;
-window.getUrgencyBadgeClasses = getUrgencyBadgeClasses;
-window.getAccountTypeBadgeClasses = getAccountTypeBadgeClasses;
-window.showAdminError = showAdminError;
 window.getAdminUsers = getAdminUsers; 

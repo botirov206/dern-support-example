@@ -206,7 +206,14 @@
         </div>
     </main>
 
+    <!-- Load scripts in correct order -->
     <script src="/js/main.js"></script>
+    <script>
+        // Ensure main.js functions are available
+        if (typeof fetchWithAuth === 'undefined') {
+            console.error('Required functions from main.js are not available');
+        }
+    </script>
     <script src="/assets/js/admin.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
